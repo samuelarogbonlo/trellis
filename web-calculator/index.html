@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Abstraction Cost Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔍 Account Abstraction Cost Calculator</h1>
+            <p class="subtitle">Discover the real costs of gas abstraction across providers and chains</p>
+        </header>
+
+        <div class="calculator-section">
+            <div class="input-group">
+                <label for="chain-select">Select Chain:</label>
+                <select id="chain-select">
+                    <option value="ethereum">Ethereum</option>
+                    <option value="polygon">Polygon</option>
+                    <option value="base" selected>Base</option>
+                    <option value="arbitrum">Arbitrum One</option>
+                    <option value="optimism">Optimism</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="transaction-type">Transaction Type:</label>
+                <select id="transaction-type">
+                    <option value="simple" selected>Simple Transfer</option>
+                    <option value="erc20">ERC-20 Transfer</option>
+                    <option value="defi">DeFi Interaction</option>
+                    <option value="nft">NFT Mint/Transfer</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="gas-amount">Estimated Gas Units:</label>
+                <input type="number" id="gas-amount" value="21000" min="21000" max="500000">
+            </div>
+
+            <button id="calculate-btn" class="calculate-button">Calculate Costs</button>
+        </div>
+
+        <div id="results" class="results-section" style="display: none;">
+            <h2>💰 Cost Comparison Results</h2>
+            <div class="comparison-grid" id="comparison-grid">
+                <!-- Results will be populated here -->
+            </div>
+            
+            <div class="insights" id="insights">
+                <!-- Insights will be populated here -->
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3>📊 What This Calculator Shows</h3>
+            <ul>
+                <li><strong>Real Costs:</strong> Actual transaction costs including provider fees</li>
+                <li><strong>Hidden Fees:</strong> Additional charges not advertised (typically 7-15%)</li>
+                <li><strong>Overhead:</strong> Extra cost compared to standard EOA transactions</li>
+                <li><strong>Provider Comparison:</strong> Side-by-side cost analysis</li>
+            </ul>
+            
+            <div class="disclaimer">
+                <p><strong>Note:</strong> Costs are estimates based on real testing data from our gas abstraction debugger. 
+                Actual costs may vary based on network conditions and provider implementations.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>Built with data from the <a href="https://github.com/your-repo/gas-abstraction-debugger">Gas Abstraction Debugger</a></p>
+            <p>Part of the <strong>Trellis Gas Abstraction Infrastructure Project</strong></p>
+        </footer>
+    </div>
+
+    <script src="calculator.js"></script>
+</body>
+</html>
