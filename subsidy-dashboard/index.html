@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subsidy Experiment Analytics - Phase 2.1</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/date-fns@2.29.0/index.min.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <header class="dashboard-header">
+            <h1>🧪 Subsidy Experiment Analytics</h1>
+            <p class="subtitle">Phase 2.1: Testing cost subsidy impact on user retention</p>
+            <div class="status-indicator">
+                <span class="status-dot" id="experiment-status"></span>
+                <span id="experiment-status-text">Loading...</span>
+            </div>
+        </header>
+
+        <!-- Key Metrics Overview -->
+        <section class="metrics-overview">
+            <div class="metric-card pool-health">
+                <div class="metric-header">
+                    <h3>Pool Health</h3>
+                    <span class="metric-icon">💰</span>
+                </div>
+                <div class="metric-value" id="pool-utilization">--</div>
+                <div class="metric-label">Utilization Rate</div>
+                <div class="metric-details">
+                    <div class="detail-item">
+                        <span>Remaining: </span>
+                        <span id="remaining-funds">-- ETH</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Est. Transactions: </span>
+                        <span id="estimated-transactions">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="metric-card retention-stats">
+                <div class="metric-header">
+                    <h3>Retention Impact</h3>
+                    <span class="metric-icon">📈</span>
+                </div>
+                <div class="metric-value" id="retention-improvement">--</div>
+                <div class="metric-label">Avg Retention Lift</div>
+                <div class="metric-details">
+                    <div class="detail-item">
+                        <span>7-day: </span>
+                        <span id="retention-7day">--%</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>30-day: </span>
+                        <span id="retention-30day">--%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="metric-card experiment-scale">
+                <div class="metric-header">
+                    <h3>Experiment Scale</h3>
+                    <span class="metric-icon">👥</span>
+                </div>
+                <div class="metric-value" id="total-users">--</div>
+                <div class="metric-label">Total Users</div>
+                <div class="metric-details">
+                    <div class="detail-item">
+                        <span>Active: </span>
+                        <span id="active-users">--</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Transactions: </span>
+                        <span id="total-transactions">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="metric-card cost-efficiency">
+                <div class="metric-header">
+                    <h3>Cost Efficiency</h3>
+                    <span class="metric-icon">⚡</span>
+                </div>
+                <div class="metric-value" id="avg-subsidy-cost">--</div>
+                <div class="metric-label">Avg Subsidy Cost</div>
+                <div class="metric-details">
+                    <div class="detail-item">
+                        <span>Total Spent: </span>
+                        <span id="total-subsidies">-- ETH</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>ROI: </span>
+                        <span id="subsidy-roi">--</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- A/B Testing Results -->
+        <section class="ab-testing-results">
+            <h2>A/B Testing Results</h2>
+            <div class="experiment-groups">
+                <div class="group-card control-group">
+                    <div class="group-header">
+                        <h3>Control Group</h3>
+                        <span class="group-badge">0% Subsidy</span>
+                    </div>
+                    <div class="group-metrics">
+                        <div class="group-metric">
+                            <span class="value" id="control-users">--</span>
+                            <span class="label">Users</span>
+                        </div>
+                        <div class="group-metric">
+                            <span class="value" id="control-retention">--%</span>
+                            <span class="label">7-day Retention</span>
+                        </div>
+                        <div class="group-metric">
+                            <span class="value" id="control-transactions">--</span>
+                            <span class="label">Avg Transactions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group-card partial-group">
+                    <div class="group-header">
+                        <h3>Partial Subsidy</h3>
+                        <span class="group-badge">50% Subsidy</span>
+                    </div>
+                    <div class="group-metrics">
+                        <div class="group-metric">
+                            <span class="value" id="partial-users">--</span>
+                            <span class="label">Users</span>
+                        </div>
+                        <div class="group-metric">
+                            <span class="value" id="partial-retention">--%</span>
+                            <span class="label">7-day Retention</span>
+                        </div>
+                        <div class="group-metric">
+                            <span class="value" id="partial-transactions">--</span>
+                            <span class="label">Avg Transactions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group-card full-group">
+                    <div class="group-header">
+                        <h3>Full Subsidy</h3>
+                        <span class="group-badge">100% Subsidy</span>
+                    </div>
+                    <div class="group-metrics">
+                        <div class="group-metric">
+                            <span class="value" id="full-users">--</span>
+                            <span class="label">Users</span>
+                        </div>
+                        <div class="group-metric">
+                            <span class="value" id="full-retention">--%</span>
+                            <span class="label">7-day Retention</span>
+                        </div>
+                        <div class="group-metric">
+                            <span class="value" id="full-transactions">--</span>
+                            <span class="label">Avg Transactions</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts and Visualizations -->
+        <section class="charts-section">
+            <div class="chart-container">
+                <h3>Retention Rate by Subsidy Level</h3>
+                <canvas id="retention-chart" width="400" height="200"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3>Transaction Volume Over Time</h3>
+                <canvas id="volume-chart" width="400" height="200"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3>Subsidy Cost vs Retention Improvement</h3>
+                <canvas id="cost-effectiveness-chart" width="400" height="200"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h3>User Journey Funnel</h3>
+                <div class="funnel-chart" id="user-funnel">
+                    <div class="funnel-stage">
+                        <div class="stage-bar" style="width: 100%">
+                            <span class="stage-label">Users Enrolled</span>
+                            <span class="stage-count" id="enrolled-count">1000</span>
+                        </div>
+                    </div>
+                    <div class="funnel-stage">
+                        <div class="stage-bar" style="width: 65%">
+                            <span class="stage-label">Completed 1st Transaction</span>
+                            <span class="stage-count" id="first-tx-count">650</span>
+                        </div>
+                    </div>
+                    <div class="funnel-stage">
+                        <div class="stage-bar" style="width: 35%">
+                            <span class="stage-label">7-day Retention</span>
+                            <span class="stage-count" id="week-retention-count">350</span>
+                        </div>
+                    </div>
+                    <div class="funnel-stage">
+                        <div class="stage-bar" style="width: 15%">
+                            <span class="stage-label">30-day Retention</span>
+                            <span class="stage-count" id="month-retention-count">150</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistical Significance -->
+        <section class="statistical-analysis">
+            <h2>Statistical Significance</h2>
+            <div class="significance-tests">
+                <div class="test-result">
+                    <h4>Control vs Partial Subsidy</h4>
+                    <div class="p-value">
+                        <span>p-value: </span>
+                        <span id="control-partial-p" class="p-value-result">--</span>
+                    </div>
+                    <div class="confidence">
+                        <span>95% Confidence Interval: </span>
+                        <span id="control-partial-ci">--</span>
+                    </div>
+                    <div class="significance-badge" id="control-partial-sig">--</div>
+                </div>
+
+                <div class="test-result">
+                    <h4>Control vs Full Subsidy</h4>
+                    <div class="p-value">
+                        <span>p-value: </span>
+                        <span id="control-full-p" class="p-value-result">--</span>
+                    </div>
+                    <div class="confidence">
+                        <span>95% Confidence Interval: </span>
+                        <span id="control-full-ci">--</span>
+                    </div>
+                    <div class="significance-badge" id="control-full-sig">--</div>
+                </div>
+
+                <div class="test-result">
+                    <h4>Partial vs Full Subsidy</h4>
+                    <div class="p-value">
+                        <span>p-value: </span>
+                        <span id="partial-full-p" class="p-value-result">--</span>
+                    </div>
+                    <div class="confidence">
+                        <span>95% Confidence Interval: </span>
+                        <span id="partial-full-ci">--</span>
+                    </div>
+                    <div class="significance-badge" id="partial-full-sig">--</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Alerts and Recommendations -->
+        <section class="alerts-section">
+            <h2>Alerts & Recommendations</h2>
+            <div class="alerts-container" id="alerts-container">
+                <!-- Alerts will be populated dynamically -->
+            </div>
+            <div class="recommendations-container" id="recommendations-container">
+                <!-- Recommendations will be populated dynamically -->
+            </div>
+        </section>
+
+        <!-- Raw Data Export -->
+        <section class="data-export">
+            <h2>Data Export</h2>
+            <div class="export-controls">
+                <button class="export-btn" onclick="exportData('csv')">Export CSV</button>
+                <button class="export-btn" onclick="exportData('json')">Export JSON</button>
+                <button class="export-btn" onclick="generateReport()">Generate Report</button>
+            </div>
+        </section>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
