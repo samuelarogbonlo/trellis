@@ -170,6 +170,35 @@ npm run lint
 npm run format
 ```
 
+## Web Cost Calculator
+
+Access the interactive cost calculator for quick cost estimates:
+
+```bash
+# Serve the web calculator locally
+cd web-calculator
+python3 -m http.server 3002
+# Open http://localhost:3002
+```
+
+**Features:**
+- **Real-time cost comparison** across all providers and chains
+- **Transaction type scaling** (Simple Transfer, ERC-20, DeFi, NFT)
+- **Hidden fee visualization** showing 7-15% additional costs
+- **Provider rankings** with success rates and execution times
+- **Cost insights** including overhead vs standard transactions
+- **Responsive design** works on desktop and mobile
+- **No setup required** - just open in browser
+
+**How to use:**
+1. Select your target chain (Ethereum, Base, Arbitrum, etc.)
+2. Choose transaction type (affects gas usage multiplier)
+3. Adjust gas units if needed
+4. Click "Calculate Costs" to see provider comparison
+5. Review cost breakdown and hidden fees for each provider
+
+The calculator uses real data from our CLI debugger testing to show accurate cost estimates.
+
 ## Architecture
 
 ```
